@@ -1,6 +1,8 @@
 class Solution {
 public:
     int peakIndexInMountainArray(vector<int>& arr) {
+        ios_base::sync_with_stdio(false);
+        cin.tie(NULL);
         int l = 0;
         int r = arr.size() - 1;
         while(l < r)
