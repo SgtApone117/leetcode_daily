@@ -26,7 +26,7 @@ public:
     }
 
     int numWays(int steps, int arrLen) {
-        arrLen = min(steps,arrLen);
+        arrLen = min((steps/2) + 1,arrLen);
         n = arrLen;
         memset(t,-1,sizeof(t));
         return solve(0, steps);
