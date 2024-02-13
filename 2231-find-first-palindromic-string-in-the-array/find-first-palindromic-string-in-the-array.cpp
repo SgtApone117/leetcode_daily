@@ -6,9 +6,7 @@ public:
         while(j > i)
         {
             if(word[i] != word[j])
-            {
                 return false;
-            }
             i++;
             j--;
         }
@@ -16,6 +14,7 @@ public:
     }
     string firstPalindrome(vector<string>& words) 
     {
+        ios_base::sync_with_stdio(false); cin.tie(NULL);
         int i,j,flag = 0;
         for(string &word : words)
         {
