@@ -7,18 +7,14 @@ public:
         for(string &word : words)
         {
             i = 0, j = word.length() - 1;
-            flag = 0;
+            flag = 1;
             if(word.length() == 1 || word.length() == 0)
                 return word;
             if(word[i] == word[j])
             {
                 while(j > i)
                 {
-                    if(word[i] == word[j])
-                    {
-                        flag = 1;
-                    }
-                    else
+                    if(word[i] != word[j])
                     {
                         flag = 0;
                         break;
