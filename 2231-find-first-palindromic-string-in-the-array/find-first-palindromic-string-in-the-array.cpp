@@ -8,23 +8,18 @@ public:
         {
             i = 0, j = word.length() - 1;
             flag = 1;
-            if(word.length() == 1 || word.length() == 0)
-                return word;
-            if(word[i] == word[j])
+            while(j > i)
             {
-                while(j > i)
+                if(word[i] != word[j])
                 {
-                    if(word[i] != word[j])
-                    {
-                        flag = 0;
-                        break;
-                    }
-                    i++;
-                    j--;
+                    flag = 0;
+                    break;
                 }
+                i++;
+                j--;
+            }
                 if(flag == 1)
                     return word;
-            }
         }
         return "";
     }
