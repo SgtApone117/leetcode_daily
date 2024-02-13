@@ -9,16 +9,13 @@ public:
                 count++;
                 candidate = x;
             }
+            else if(x == candidate)
+            {
+               count++;
+            }
             else
             {
-                if(x == candidate)
-                {
-                    count++;
-                }
-                else
-                {
-                    count--;
-                }
+                count--;
             }
         }
         return candidate;
