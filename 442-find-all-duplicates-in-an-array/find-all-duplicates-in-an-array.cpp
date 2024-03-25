@@ -2,14 +2,15 @@ class Solution {
 public:
     vector<int> findDuplicates(vector<int>& nums) 
     {
-        unordered_map<int,int> mp;
-        for(int &num : nums)
-            mp[num]++;
         vector<int> res;
-        for(auto &x : mp)
+        sort(begin(nums), end(nums));
+        for(int i = 0; i < nums.size(); i++)
         {
-            if(x.second / 2 == 1)
-                res.push_back(x.first);
+            if(i+1 < nums.size() && nums[i] == nums[i+1])
+            {
+                res.push_back(nums[i]);
+            }
+            cout << i << endl;
         }
         return res;
     }
