@@ -11,25 +11,19 @@
  */
 class Solution {
 public:
-    int find(TreeNode* root, int curr)
+    int sumNumbers(TreeNode* root, int sum = 0) 
     {
         if(!root)
-        {
             return 0;
-        }
-        curr  = curr*10 + root->val;
+
+        sum = sum*10 + root->val;
 
         if(root->left == NULL && root->right == NULL)
-        {
-            return curr;
-        }
+            return sum;
 
-        int left = find(root->left, curr);
-        int right = find(root->right, curr);
+        int left  = sumNumbers(root->left, sum);
+        int right = sumNumbers(root->right, sum);
 
-        return left+right;
-    }
-    int sumNumbers(TreeNode* root) {
-        return find(root, 0);
+        return left+right;    
     }
 };
