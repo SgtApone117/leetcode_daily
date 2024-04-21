@@ -1,48 +1,42 @@
 class Solution {
 public:
-    int m;
-    int n;
-    vector<vector<int>> result;
-        
-    vector<vector<int>> directions{{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
-    
-    void dfs(vector<vector<int>>& land, int i, int j, int& r2, int& c2) {
-        land[i][j] = 0;
-        
-        r2 = max(r2, i);
-        c2 = max(c2, j);
-        
-        for(auto &dir : directions) {
-            int i_ = i + dir[0];
-            int j_ = j + dir[1];
-            
-            if(i_ >= 0 && i_ < m && j_ >= 0 && j_ < n && land[i_][j_] == 1) {
-                dfs(land, i_, j_, r2, c2);
-            }
+    void dfs(vector<vector<int>>& land, int row, int col, int i, int j, int& r2, int& c2, vector<vector<int>>& result)
+    {
+        if(i < 0 || i >= row || j < 0 || j >= col || land[i][j] != 1)
+        {
+            return;
         }
+
+        r2 = max(i, r2);
+        c2 = max(j, c2);
+        land[i][j] = -1;
+        dfs(land, row, col, i+1, j, r2, c2, result);
+        dfs(land, row, col, i-1, j, r2, c2, result);
+        dfs(land, row, col, i, j+1, r2, c2, result);
+        dfs(land, row, col, i, j-1, r2, c2, result);
     }
-    
     vector<vector<int>> findFarmland(vector<vector<int>>& land) {
-        m = land.size();
-        n = land[0].size();
-        
-        
-        for(int i = 0; i < m; i++) {
-            for(int j = 0; j < n; j++) {
-                
-                if(land[i][j] == 1) {
+        int m = land.size();
+        int n = land[0].size();
+
+        vector<vector<int>> result;
+
+        for(int i = 0; i < m; i++)
+        {
+            for(int j = 0; j < n; j++)
+            {
+                if(land[i][j] == 1)
+                {
                     int r1 = i;
                     int c1 = j;
                     int r2 = -1;
                     int c2 = -1;
-                    
-                    dfs(land, i, j, r2, c2);
-                    result.push_back({r1, c1, r2, c2});
+                    dfs(land, m, n, i, j, r2, c2, result);
+                    cout << r2 << " " << c2 << endl;
+                    result.push_back({r1,c1,r2,c2});
                 }
-                
             }
         }
-        
         return result;
     }
 };
