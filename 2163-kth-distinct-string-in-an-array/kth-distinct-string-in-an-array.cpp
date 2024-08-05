@@ -1,15 +1,24 @@
 class Solution {
 public:
     string kthDistinct(vector<string>& arr, int k) {
-        unordered_map<string,int> mp;
-        for(auto &str : arr)
+        unordered_set<string> dtst;
+        unordered_set<string> dupst;
+        for(string& str : arr)
         {
-            mp[str]++;
+            if(dupst.find(str) != dupst.end())
+                continue;
+            if(dtst.find(str) == dtst.end())
+                dtst.insert(str);
+            else
+            {
+                dtst.erase(str);
+                dupst.insert(str);
+            }
         }
 
         for(string& str : arr)
         {
-            if(mp[str] == 1)
+            if(dtst.find(str) != dtst.end())
                 k--;
             if(k == 0)
                 return str;
