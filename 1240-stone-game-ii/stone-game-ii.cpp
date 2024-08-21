@@ -1,41 +1,35 @@
 class Solution {
 public:
-    
     int n;
-    int t[2][101][101]; //t[2][n+1][n+1] - 2*(n+1)*(n+1) ~n^2 * n ~ O(n^3)
-    int solveForAlice(vector<int>& piles, int person, int i, int M) {
-        
-        if(i >= n)
+    int t[2][101][101];
+    int solveForAlice(int person, int index, int M, vector<int>& piles)
+    {
+        if(index >= n)
             return 0;
-        
-        if(t[person][i][M] != -1)
-            return t[person][i][M];
-        
-        int result = (person == 1) ? -1 : INT_MAX;
-        
+
+        if(-1 != t[person][index][M])
+            return t[person][index][M];
         int stones = 0;
-        
-        for(int x = 1; x <= min(2*M, n-i); x++) {
-            
-            stones += piles[i+x-1];
-            
-            if(person == 1) { //Alice
-                result = max(result, stones + solveForAlice(piles, 0, i+x, max(M, x)));
-            } else { //Bob
-                result = min(result, solveForAlice(piles, 1, i+x, max(M, x)));
+        int result = (person == 1) ? INT_MIN : INT_MAX;
+
+        for(int x = 1; x <= min(2*M, n-index); x++)
+        {
+            stones += piles[index+x-1];
+            if(1 == person)
+            {
+                result = max(result, stones + solveForAlice(0, index+x, max(M, x), piles));
             }
-            
+            else
+            {
+                result = min(result, solveForAlice(1, index+x, max(M, x), piles));
+            }
         }
-        
-        return t[person][i][M] = result;
-        
+        return t[person][index][M] = result;
     }
-    
-    int stoneGameII(vector<int>& piles) {
+    int stoneGameII(vector<int>& piles) 
+    {
         n = piles.size();
-        
         memset(t, -1, sizeof(t));
-        
-        return solveForAlice(piles, 1, 0, 1);
+        return solveForAlice(1, 0, 1, piles);
     }
 };
