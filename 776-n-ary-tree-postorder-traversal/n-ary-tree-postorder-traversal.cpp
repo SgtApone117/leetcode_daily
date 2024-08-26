@@ -20,22 +20,22 @@ public:
 
 class Solution {
 public:
-    vector<int> result;
-    void traverse(Node* root)
+    
+    void traverse(Node* root, vector<int>& result)
     {
         if(!root)
             return;
-        for(auto& child : root->children)
+        for(auto child : root->children)
         {
-            traverse(child);
+            traverse(child, result);
         }
         result.push_back(root->val);
         
     }
     vector<int> postorder(Node* root) 
     {
-        result.clear();
-        traverse(root);
+        vector<int> result;
+        traverse(root, result);
         return result;      
     }
 };
