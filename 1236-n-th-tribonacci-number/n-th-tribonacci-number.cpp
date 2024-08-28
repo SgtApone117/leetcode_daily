@@ -1,7 +1,6 @@
 class Solution {
 public:
-    int t[38];
-    int solve(int n)
+    int tribonacci(int n) 
     {
         if(0 == n)
             return 0;
@@ -9,13 +8,14 @@ public:
             return 1;
         if(2 == n)
             return 1;
-        if(-1 != t[n])
-            return t[n];
-        return t[n] = solve(n-3)+solve(n-2)+solve(n-1); 
-    }
-    int tribonacci(int n) 
-    {
-        memset(t, -1, sizeof(t));
-        return solve(n);
+        vector<int> dp(n+1, 0);
+        dp[0]=0;
+        dp[1]=1;
+        dp[2]=1;
+        for(int i = 3; i <= n; i++)
+        {
+            dp[i]=dp[i-1]+dp[i-2]+dp[i-3];
+        }
+        return dp[n];
     }
 };
