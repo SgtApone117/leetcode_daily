@@ -1,19 +1,13 @@
 class Solution {
 public:
     vector<vector<int>> construct2DArray(vector<int>& original, int m, int n) {
-        int len = original.size();
-
-        if(len > m*n || len < m*n)
+        if(m*n != original.size())
             return {};
-        vector<vector<int>> res(m);
+        vector<vector<int>> res(m, vector<int>(n));
         int x = 0;
-        for(int i = 0; i < m; i++)
+        for(int i = 0; i < original.size(); i++)
         {
-            for(int j = 0; j < n; j++)
-            {
-                res[i].push_back(original[x]);
-                x++;
-            }
+            res[i/n][i%n]=original[i];
         }
         return res;
     }
