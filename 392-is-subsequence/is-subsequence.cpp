@@ -6,14 +6,13 @@ public:
         int i = 0, j = 0;
         for(int j = 0; j < m; j++)
         {
+            if(i == n)
+                break;
             if(s[i] == t[j])
             {
                 i++;
             }
         }
-        cout << i << endl;
-        if(i == n)
-            return true;
-        return false;
+        return (i == n);
     }
 };
