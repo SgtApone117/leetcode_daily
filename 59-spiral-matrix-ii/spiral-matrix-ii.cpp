@@ -48,10 +48,7 @@ public:
                 left++;
             }
 
-            dir += 1;
-
-            if(4 == dir)
-                dir = 0;
+            dir = (dir+1)%4;
         }
         return matrix;
     }
