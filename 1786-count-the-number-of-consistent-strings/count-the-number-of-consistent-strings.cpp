@@ -2,16 +2,16 @@ class Solution {
 public:
     int countConsistentStrings(string allowed, vector<string>& words) {
         ios_base::sync_with_stdio(false);
-        unordered_set<char> st;
+        vector<int> freq(26, 0);
         for(char &ch : allowed)
-            st.insert(ch);
+            freq[ch-'a'] = 1;
         int count = 0;
         for(string &word : words)
         {
             bool flag = true;
-            for(int i = 0; i < word.length(); i++)
+            for(char &ch : word)
             {
-                if(st.find(word[i]) == st.end())
+                if(freq[ch-'a'] != 1)
                 {
                     flag = false;
                     break;
