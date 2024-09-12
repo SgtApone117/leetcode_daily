@@ -1,6 +1,7 @@
 class Solution {
 public:
     int countConsistentStrings(string allowed, vector<string>& words) {
+        ios_base::sync_with_stdio(false);
         unordered_set<char> st;
         for(char &ch : allowed)
             st.insert(ch);
