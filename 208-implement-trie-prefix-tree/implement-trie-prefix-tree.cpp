@@ -1,9 +1,12 @@
 struct TrieNode
 {
-    vector<TrieNode*> data;
-    bool isEnd;
 
-    TrieNode() :isEnd(false), data(vector<TrieNode*> (26, nullptr)){}
+    TrieNode* data[26];
+    bool isEnd;
+    TrieNode() :isEnd(false){
+        for(int i = 0; i < 26; i++)
+            data[i] = nullptr;
+    }
 };
 class Trie {
 private:
