@@ -5,22 +5,20 @@ public:
         sort(temp.begin(), temp.end());
 
         unordered_map<int,int> mp;
-        vector<int> res;
         int x = 1;
         for(int& i : temp)
         {
-            if(mp.find(i) == mp.end())
+            if(!mp.count(i))
             {
                 mp[i] = x;
                 x++;
             }
         }
 
-        for(int& i : arr)
+        for(int i = 0; i < arr.size(); i++)
         {
-            if(mp.find(i) != mp.end())
-                res.push_back(mp[i]);
+            arr[i] = mp[arr[i]];
         }
-        return res;
+        return arr;
     }
 };
