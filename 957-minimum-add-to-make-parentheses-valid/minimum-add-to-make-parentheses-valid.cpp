@@ -5,7 +5,7 @@ public:
         int openBracket = 0;
         int result = 0;
 
-        for(char &ch : s)
+        for(char ch : s)
         {
             if('(' == ch)
                 openBracket++;
