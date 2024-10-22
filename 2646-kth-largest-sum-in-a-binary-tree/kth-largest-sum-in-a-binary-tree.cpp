@@ -36,8 +36,6 @@ public:
         vector<long long> calc(getHeight, 0);
         currNode = root;
         solve(currNode, 0, calc);
-        for(long long val : calc)
-            cout << val << endl;
         sort(begin(calc), end(calc), greater<long long>());
         if(k > getHeight)
             return -1;
