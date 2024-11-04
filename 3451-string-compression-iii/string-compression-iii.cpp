@@ -10,23 +10,19 @@ public:
             int count = 0;
             while(i < word.length() && ch == word[i])
             {
-                count += 1;
-                i++;
-            }
-            while(count != 0)
-            {
-                if(count >= 9)
+                count++;
+                if(count == 9)
                 {
                     s.push_back('9');
                     s.push_back(curr_char);
-                    count -= 9;
-                }
-                if(count != 0 && count < 9)
-                {
-                    s.push_back(count+'0');
-                    s.push_back(curr_char);
                     count = 0;
                 }
+                i++;
+            }
+            if(count > 0)
+            {
+                s.push_back(count+'0');
+                s.push_back(curr_char);
             }
         }
         return s;
