@@ -8,7 +8,7 @@ public:
         {
             if(ch != curr_char || count == 9)
             {
-                s.push_back(count+'0');
+                s.push_back((char)count+'0');
                 s.push_back(curr_char);
                 count = 0;
                 curr_char = ch;
@@ -17,7 +17,7 @@ public:
         }
         if(count > 0)
         {
-            s.push_back(count+'0');
+            s.push_back((char)count+'0');
             s.push_back(curr_char);
         }
         return s;
