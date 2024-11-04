@@ -2,29 +2,59 @@ class Solution {
 public:
     int compress(vector<char>& chars) {
         int n = chars.size();
-        int i, count, curr;
-        i = 0, curr = 0;
+        int i, j, last, count;
+        i = 0, j = 0, last = 0, count = 0;
+        char ch = chars[0];
+        if(1 == n)
+            return 1;
         while(i < n)
         {
-            char ch = chars[i];
-            count = 0;
-            while(i < n && ch == chars[i])
+            if(ch == chars[i])
             {
                 i++;
                 count+=1;
             }
-            chars[curr] = ch;
-            curr++;
+            else if(ch != chars[i])
+            {
+                chars[j] = ch;
+                j++;
+                if(count > 1)
+                {
+                    string s = to_string(count);
+                    for(int x = 0; x < s.length(); x++)
+                    {
+                        chars[j] = s[x];
+                        j++;
+                    }
+                }
+                
+                ch = chars[i];
+                count = 0;
+                //cout << ch << endl;
+            }
+        }
+        if(count > 1)
+        {
+            chars[j] = ch;
+            j++;
             if(count > 1)
             {
                 string s = to_string(count);
-                for(char &ch : s)
+                for(int x = 0; x < s.length(); x++)
                 {
-                    chars[curr] = ch;
-                    curr++;
+                    chars[j] = s[x];
+                    j++;
                 }
             }
+            
+            ch = chars[i];
+            count = 0;
+        }else
+        {
+            cout << j << endl;
+            chars[j] = ch;
+            j++;
         }
-        return curr;
+        return j;
     }
 };
