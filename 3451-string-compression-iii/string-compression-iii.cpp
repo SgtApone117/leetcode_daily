@@ -4,7 +4,7 @@ public:
         string s = "";
         int count = 0;
         char curr_char = word[0];
-        for(char &ch : word)
+        for(char ch : word)
         {
             if(ch != curr_char || count == 9)
             {
