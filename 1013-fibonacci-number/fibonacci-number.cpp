@@ -1,9 +1,9 @@
 class Solution {
 public:
     int fib(int n) {
-        if(n < 2)
+        if(n == 0)
         {
-            return n;
+            return 0;
         }
         vector<int> res(n+1, 0);
         res[0] = 0;
