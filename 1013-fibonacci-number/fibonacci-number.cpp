@@ -1,19 +1,17 @@
 class Solution {
 public:
-    int solve(int n, int t[])
-    {
-        if(-1 != t[n])
-            return t[n];
-        if(0 == n)
-            return 0;
-        if(1 == n)
-            return 1;
-        return t[n] = fib(n-1)+fib(n-2);
-    }
-    int fib(int n) 
-    {
-        int t[31];
-        memset(t, -1, sizeof(t));
-        return solve(n, t);
+    int fib(int n) {
+        if(n < 2)
+        {
+            return n;
+        }
+        vector<int> res(n+1, 0);
+        res[0] = 0;
+        res[1] = 1;
+        for(int i = 2; i <= n; i++)
+        {
+            res[i] = res[i-1] + res[i-2];
+        }
+        return res[n];
     }
 };
