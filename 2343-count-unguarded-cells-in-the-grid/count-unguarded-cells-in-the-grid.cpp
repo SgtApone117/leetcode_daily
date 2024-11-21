@@ -1,75 +1,83 @@
 class Solution {
+    private:
+        void markGuarded(int row, int col, vector<vector<int>> &grid)
+        {
+            //top
+            for(int i = row-1; i>= 0; --i)
+            {
+                if(grid[i][col] == -1 || grid[i][col] == -2)
+                {
+                    break;
+                }
+                grid[i][col] = 1;
+            }
+            //bottom
+            for(int i = row+1; i < grid.size(); ++i)
+            {
+                if(grid[i][col] == -1 || grid[i][col] == -2)
+                {
+                    break;
+                }
+                grid[i][col] = 1;
+            }
+            //left
+            for(int i = col-1; i >= 0; --i)
+            {
+                if(grid[row][i] == -1 || grid[row][i] == -2)
+                {
+                    break;
+                }
+                grid[row][i] = 1;
+            }
+            //right
+            for(int i = col+1; i < grid[0].size(); ++i)
+            {
+                if(grid[row][i] == -1 || grid[row][i] == -2)
+                {
+                    break;
+                }
+                grid[row][i] = 1;
+            }
+        }
 public:
-
-    void markGaurded(int row, int col, vector<vector<int>>& grid) {
-        //UP
-        for(int i = row-1; i >= 0; i--) {
-            if(grid[i][col] == 2 || grid[i][col] == 3) {
-                break;
-            }
-            grid[i][col] = 1; //Marking it as gaurded
-        }
-
-        //Down
-        for(int i = row+1; i < grid.size(); i++) {
-            if(grid[i][col] == 2 || grid[i][col] == 3) {
-                break;
-            }
-            grid[i][col] = 1; //Marking it as gaurded
-        }
-
-        //left
-        for(int j = col-1; j >= 0; j--) {
-            if(grid[row][j] == 2 || grid[row][j] == 3) {
-                break;
-            }
-            grid[row][j] = 1; //Marking it as gaurded
-        }
-
-        //right
-        for(int j = col+1; j < grid[0].size(); j++) {
-            if(grid[row][j] == 2 || grid[row][j] == 3) {
-                break;
-            }
-            grid[row][j] = 1; //Marking it as gaurded
-        }
-
-    }
-
     int countUnguarded(int m, int n, vector<vector<int>>& guards, vector<vector<int>>& walls) {
-        vector<vector<int>> grid(m, vector<int>(n, 0));
+        vector<vector<int>> grid (m, vector<int>(n, 0)); 
 
-        //mark gaurds positions
-        for(vector<int>& vec : guards) {
-            int i = vec[0];
-            int j = vec[1];
-            grid[i][j] = 2; //gaurd
+        for(vector<int> &guard : guards)
+        {
+            int u = guard[0];
+            int v = guard[1];
+
+            grid[u][v] = -1; //guard location
         }
 
-        //mark walls positions
-        for(vector<int>& vec : walls) {
-            int i = vec[0];
-            int j = vec[1];
-            grid[i][j] = 3; //wall 
+        for(vector<int> &wall : walls)
+        {
+            int u = wall[0];
+            int v = wall[1];
+
+            grid[u][v] = -2; // wall location;
         }
 
-        for(vector<int>& gaurd : guards) {
-            int i = gaurd[0];
-            int j = gaurd[1];
-            markGaurded(i, j, grid); //four directions me check karo and mark karo gaurded
+        for(vector<int> &guard : guards)
+        {
+            int row = guard[0];
+            int col = guard[1];
+
+            markGuarded(row, col, grid);
         }
 
         int count = 0;
-        //O(m*n)
-        for(int i = 0; i < m; i++) {
-            for(int j = 0; j < n; j++) {
-                if(grid[i][j] == 0) { //ungaurded
+        for(int i = 0; i < m; i++)
+        {
+            for(int j = 0; j < n; j++)
+            {
+                if(grid[i][j] == 0)
+                {
                     count++;
                 }
             }
         }
-
         return count;
-
     }
 };
