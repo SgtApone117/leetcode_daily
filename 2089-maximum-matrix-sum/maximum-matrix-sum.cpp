@@ -6,16 +6,18 @@ public:
         int m = matrix.size();
         int n = matrix[0].size();
         int get_min = INT_MAX;
-        
+        int** p = new int*[m];
+        for (int i = 0; i < m; ++i) {
+            p[i] = matrix[i].data();
+        }
         ll total_sum = 0;
-        for(int row = 0; row < m; ++row)
+        for(int i = 0; i < m; ++i)
         {
-            int *p = &matrix[row][0];
-            for(int col = 0; col < n; ++col)
+            for(int j = 0; j < n; ++j)
             {
-                get_min = min(get_min, abs(*(p + col)));
-                total_sum += abs(*(p + col));
-                if(*(p + col) < 0)
+                get_min = min(get_min, abs(*(*(p + i) + j)));
+                total_sum += abs(*(*(p + i) + j));
+                if(*(*(p + i) + j) < 0)
                 {                    
                     count_negve++;
                 }
