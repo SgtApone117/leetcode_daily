@@ -6,10 +6,10 @@ public:
         int m = matrix.size();
         int n = matrix[0].size();
         int get_min = INT_MAX;
-        int** p = new int*[m];
+        int* p[m];
         for (int i = 0; i < m; ++i) {
-            p[i] = matrix[i].data();
-        }
+        p[i] = matrix[i].data();
+    }
         ll total_sum = 0;
         for(int i = 0; i < m; ++i)
         {
