@@ -9,7 +9,6 @@ public:
             size_t found = word.find(searchWord);
             if(found != string::npos)
             {
-                cout << found << endl;
                 if(found == 0)
                 {
                     count++;
