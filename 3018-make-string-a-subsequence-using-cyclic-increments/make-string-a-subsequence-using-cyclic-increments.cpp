@@ -12,24 +12,12 @@ public:
 
         while(i < n && j < m)
         {
-            if(str1[i] != str2[j])
+            if(str1[i] == str2[j] ||
+               (((str1[i]-'a'+1)%26)+'a') == str2[j])
             {
-                char temp = (str1[i]%122 == 0 ? 97 : str1[i]%122+1);
-                if(temp == str2[j])
-                {
-                    i++;
-                    j++;
-                }
-                else
-                {
-                    i++;
-                }
-            }
-            else
-            {
-                i++;
                 j++;
             }
+            ++i;
         }
 
         if(j == m)
