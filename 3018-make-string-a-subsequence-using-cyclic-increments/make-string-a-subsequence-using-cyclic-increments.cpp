@@ -15,7 +15,6 @@ public:
             if(str1[i] != str2[j])
             {
                 char temp = (str1[i]%122 == 0 ? 97 : str1[i]%122+1);
-                cout << temp << " ";
                 if(temp == str2[j])
                 {
                     i++;
