@@ -3,7 +3,7 @@ public:
     int minimumLength(string s) {
         int n = s.length();
         unordered_map<char,int> mp;
-        for(char& ch : s)
+        for(char ch : s)
         {
             mp[ch]++;
             if(mp[ch] >= 3)
@@ -12,7 +12,7 @@ public:
             }
         }
         int len = 0;
-        for(auto& val : mp)
+        for(auto val : mp)
         {
             len += val.second;
         }
