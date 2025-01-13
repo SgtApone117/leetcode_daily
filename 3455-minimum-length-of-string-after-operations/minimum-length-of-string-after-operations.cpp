@@ -6,10 +6,7 @@ public:
         for(char& ch : s)
         {
             mp[ch]++;
-        }
-        for(char& ch : s)
-        {
-            if(mp[ch] >=3)
+            if(mp[ch] >= 3)
             {
                 mp[ch] -= 2;
             }
