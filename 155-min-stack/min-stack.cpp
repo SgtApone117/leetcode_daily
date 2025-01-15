@@ -2,8 +2,7 @@ class MinStack {
 public:
     stack<int> st;
     stack<int> aux;
-    MinStack() {
-    }
+
     
     void push(int val) {
         if(aux.empty() || val <= aux.top())
