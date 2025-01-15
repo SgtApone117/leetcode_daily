@@ -6,13 +6,9 @@ public:
     }
     
     void push(int val) {
-        if(aux.empty())
+        if(aux.empty() || val <= aux.top())
         {
             aux.push(val);
-        }
-        else
-        {
-            if(val <= aux.top()) aux.push(val);
         }
 
         st.push(val);
