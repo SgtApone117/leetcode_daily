@@ -1,40 +1,36 @@
 class MinStack {
-    int top_;
-    MinStack* prev;
-    int minEle;
 public:
+    stack<int> st;
+    stack<int> aux;
     MinStack() {
-        top_ = -1;
-        prev = nullptr;
-        minEle = INT_MAX;
     }
     
     void push(int val) {
-        MinStack* currNode = new MinStack();
-        currNode->top_ = top_;
-        currNode->minEle = minEle;
-        currNode->prev = prev;
-        top_ = val;
-        minEle = min(val, currNode->minEle);
-        prev = currNode;
+        if(aux.empty())
+        {
+            aux.push(val);
+        }
+        else
+        {
+            if(val <= aux.top()) aux.push(val);
+        }
+
+        st.push(val);
+
     }
     
     void pop() {
-        if(prev != nullptr)
-        {
-            top_ = prev->top_;
-            minEle = prev->minEle;
-            prev = prev->prev;
-        }
+        if(st.top() == aux.top())
+            aux.pop();
+        st.pop();
     }
     
     int top() {
-        return top_;
-        
+        return st.top();
     }
     
     int getMin() {
-        return minEle;
+        return aux.top();
     }
 };
 
