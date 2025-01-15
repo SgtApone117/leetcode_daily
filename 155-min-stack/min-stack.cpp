@@ -2,10 +2,11 @@ class MinStack {
 public:
     stack<int> st;
     stack<int> aux;
-
+    MinStack() {
+    }
     
     void push(int val) {
-        if(aux.empty() || val <= aux.top())
+        if(aux.empty() || val <= getMin())
         {
             aux.push(val);
         }
@@ -15,7 +16,7 @@ public:
     }
     
     void pop() {
-        if(st.top() == aux.top())
+        if(st.top() == getMin())
             aux.pop();
         st.pop();
     }
