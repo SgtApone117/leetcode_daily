@@ -1,20 +1,29 @@
 class Solution {
 public:
     bool canConstruct(string ransomNote, string magazine) {
-        vector<int> freq(26,0);
-        for(char& ch : magazine)
-        {
-            freq[ch-'a']++;
-        }
+        int n = ransomNote.length();
+        int m = magazine.length();
 
-        for(char& ch : ransomNote)
+        //if(n != m) return false;
+        sort(ransomNote.begin(), ransomNote.end());
+        sort(magazine.begin(), magazine.end());
+        int i,j;
+        int temp = n;
+        i = 0, j = 0;
+        while(i < n &&  j < m && temp > 0)
         {
-            if(freq[ch-'a'] == 0)
+            if(ransomNote[i] == magazine[j])
             {
-                return false;
+                i++;
+                j++;
+                temp--;
             }
-            freq[ch-'a']--;
+            else
+            {
+                j++;
+            }
         }
+        if(temp > 0) return false;
         return true;
     }
 };
