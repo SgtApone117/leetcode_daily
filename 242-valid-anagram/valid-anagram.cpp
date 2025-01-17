@@ -8,8 +8,6 @@ public:
         for(char& ch : t)
         {
             if(mp[ch] == 0) return false;
-            if(mp.find(ch) == mp.end())
-                return false;
             mp[ch]--;
         }
         return true;
