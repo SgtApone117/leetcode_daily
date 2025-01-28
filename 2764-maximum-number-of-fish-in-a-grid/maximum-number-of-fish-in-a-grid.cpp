@@ -2,21 +2,31 @@ class Solution {
 public:
     int m,n;
     vector<vector<int>> directions = {{-1,0}, {1,0}, {0,-1}, {0,1}};
-    int dfs(int i, int j, vector<vector<int>>& grid)
+    int bfs(int i, int j, vector<vector<int>>& grid)
     {
-        if(i < 0 || i >= m || j < 0 || j >= n || grid[i][j] == 0)
-        {
-            return 0;
-        }
+        queue<pair<int,int>> que;
+        que.push({i,j});
         int fishCount = grid[i][j];
         grid[i][j] = 0;
 
-        for(vector<int>& dir : directions)
+        while(!que.empty())
         {
-            int i_ = i + dir[0];
-            int j_ = j + dir[1];
+            i = que.front().first;
+            j = que.front().second;
+            que.pop();
 
-            fishCount += dfs(i_, j_, grid);
+            for(auto &dir : directions)
+            {
+                int i_ = i + dir[0];
+                int j_ = j + dir[1];
+
+                if(i_ >= 0 and j_ >= 0 and i_ < m and j_ < n and grid[i_][j_] > 0)
+                {
+                    que.push({i_,j_});
+                    fishCount += grid[i_][j_];
+                    grid[i_][j_] = 0;
+                }
+            }
         }
         return fishCount;
     }
@@ -31,7 +41,7 @@ public:
             {
                 if(grid[i][j] > 0)
                 {
-                    maxFish = max(maxFish, dfs(i,j,grid));
+                    maxFish = max(maxFish, bfs(i,j,grid));
                 }
             }
         }
