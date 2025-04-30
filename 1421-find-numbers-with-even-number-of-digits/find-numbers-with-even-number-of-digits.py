@@ -1,8 +1,12 @@
 class Solution:
     def findNumbers(self, nums: List[int]) -> int:
-        count = 0
+        res = 0
         for num in nums:
-            if len(str(num)) % 2 == 0:
+            count = 0
+            while num > 0:
                 count += 1
-        return count
+                num //= 10
+            if count % 2 == 0:
+                res += 1
+        return res
         
