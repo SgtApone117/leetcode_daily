@@ -1,20 +1,15 @@
 class Solution:
     def solve(self, num: int, res: list) -> None:
-        if num < 10:
-            res.append(num)
-            return
-        res.append(num%10)
-        self.solve(num//10,res)
-        return
+        if num == 0:
+            return res[0]
+        res[0] = res[0]*10 + num%10
+        return self.solve(num//10,res)
+
     def reverse(self, x: int) -> int:
-        res = []
+        res = [0]
         self.solve(abs(x),res)
-        print(res)
-        number = 0
-        unit_place = 10**(len(res)-1)
-        for digit in res:
-            number += digit*unit_place
-            unit_place //= 10
-        if number < -1 * (2**31 - 1) or number > 2**31:
+        INT_MAX = (2**31)-1
+        INT_MIN = -1 * (2**31)
+        if res[0] >= INT_MAX or res[0] < INT_MIN:
             return 0
-        return -1*number if x < 0 else number
+        return -1 * res[0] if x < 0 else res[0]
