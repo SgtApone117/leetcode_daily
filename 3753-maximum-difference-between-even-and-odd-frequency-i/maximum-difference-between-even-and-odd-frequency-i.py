@@ -8,11 +8,9 @@ class Solution:
             if odd == 0:
                 continue
             if odd % 2 != 0:
-                print(odd)
                 for even in mp:
                     if even == 0:
                         continue
                     if even % 2 == 0:
-                        print(even)
                         max_res = max(max_res, odd-even)
         return max_res
