@@ -1,106 +1,108 @@
-struct Node
-{
-    int val;
-    struct Node *next;
-};
 class MyLinkedList {
 private:
-    Node *head;
+    struct Node
+    {
+        int val;
+        std::unique_ptr<Node> next;
+
+        Node(int v) : val(v), next(nullptr) {}
+    };
+    std::unique_ptr<Node> head;
+    Node *tail;
     int size;
 public:
-    MyLinkedList() {
-        size = 0;
-        head = nullptr;
-    }
+    MyLinkedList() : head(nullptr),tail(nullptr),size(0) {}
     
     int get(int index) {
-        if(index >= size)
+        if(index < 0 || index >= size)
         {
             return -1;
         }
-        struct Node* currNode = head;
+        Node* currNode = head.get();
         for(int i = 0; i < index; i++)
         {
-            currNode = currNode->next;
+            currNode = currNode->next.get();
         }
         return currNode->val;
     }
     
     void addAtHead(int val) {
-        struct Node *newNode = new Node;
-        newNode->val = val;
-        newNode->next = head;
-        head = newNode;
+        auto newNode = std::make_unique<Node>(val);
+        newNode->next = std::move(head);
+        head = std::move(newNode);
+        if(size == 0)
+        {
+            tail = head.get();
+        }
         size++;
     }
     
     void addAtTail(int val) {
-        if(head == nullptr)
+        auto newNode = std::make_unique<Node>(val);
+        if(size == 0)
         {
-            addAtHead(val);
-            return;
+            head = std::move(newNode);
+            tail = head.get();
         }
-        struct Node* newNode = new Node;
-        newNode->val = val;
-        newNode->next = nullptr;
-        struct Node* currNode = head;
-        while(currNode->next)
+        else
         {
-            currNode = currNode->next;
+            tail->next = std::move(newNode);
+            tail = tail->next.get();
         }
-        currNode->next = newNode;
         size++;
     }
     
     void addAtIndex(int index, int val) {
-        if(index > size)
+        if(index < 0 || index > size)
         {
             return;
         }
-        else if(index == 0)
+        if(index == 0)
         {
             addAtHead(val);
             return;
         }
-        else if(index == size)
+        if(index == size)
         {
             addAtTail(val);
             return;
         }
-        else
+        Node* currNode = head.get();
+        for(int i = 0; i < index-1; i++)
         {
-            struct Node* currNode = head;
-            for(int i = 0; i < index-1; i++)
-            {
-                currNode = currNode->next;
-            }
-            struct Node* newNode = new Node;
-            newNode->val = val;
-            newNode->next = currNode->next;
-            currNode->next = newNode;
+            currNode = currNode->next.get();
         }
+        auto newNode = std::make_unique<Node>(val);
+        newNode->next = std::move(currNode->next);
+        currNode->next = std::move(newNode);
         size++;
     }
     
     void deleteAtIndex(int index) {
-        if(index >= size)
+        if(index < 0 || index >= size)
         {
             return;
         }
-        else if(index == 0)
-        {
-            head = head->next;
-        }
-        else
-        {
-            struct Node* currNode = head;
-            for(int i = 0; i < index-1; i++)
-            {
-                currNode = currNode->next;
-            }
-            currNode->next = currNode->next->next;
-        }
         size--;
+        if(index == 0)
+        {
+            head = std::move(head->next);
+            if(size == 0)
+            {
+                tail = nullptr;
+            }
+            return;
+        }
+        Node* currNode = head.get();
+        for(int i = 0; i < index-1; i++)
+        {
+            currNode = currNode->next.get();
+        }
+        currNode->next = std::move(currNode->next->next);
+        if(!currNode->next)
+        {
+            tail = currNode;
+        }
     }
 };
 
