@@ -62,7 +62,7 @@ private:
             return 0;
         }
         pair<int,int> res = make_pair(1,root->val);
-        vector<int> result;
+        //vector<int> result;
         queue<TreeNode*> q;
         q.push(root);
         int level = 0;
@@ -92,7 +92,7 @@ private:
                 res.first = level;
                 res.second = sum;
             }
-            result.push_back(sum);
+            //result.push_back(sum);
         }
         return res.first;
     }
