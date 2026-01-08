@@ -1,32 +1,33 @@
 class Solution {
 public:
-    int maxDotProduct(vector<int>& nums1, vector<int>& nums2) 
+    const int UNVISITED = -1000000001;
+    int solve(vector<int>& nums1, vector<int>& nums2, int m, int n,int i, int j,int memo[501][501])
     {
-        int arr[505][505];
-        int maxi = INT_MIN;
-        for(int i = 0; i <= 501; i++)
-            arr[0][i] = INT_MIN;
-        for(int i = 1; i <= nums1.size(); i++)
+        if(i == m || j == n)
         {
-            for(int j = 1; j <= nums2.size(); j++)
+            return INT_MIN;
+        }
+
+        if(memo[i][j] != UNVISITED)
+        {
+            return memo[i][j];
+        }
+
+        int takePairsAndContinue = nums1[i]*nums2[j] + max(0, solve(nums1, nums2, m, n, i+1, j+1, memo));;
+        int skipA = solve(nums1, nums2, m, n, i+1, j, memo);
+        int skipB = solve(nums1, nums2, m, n, i, j+1, memo);
+
+        return memo[i][j] = max({takePairsAndContinue, skipA, skipB});
+    }
+    int maxDotProduct(vector<int>& nums1, vector<int>& nums2) {
+        int memo[501][501];
+        for(int i = 0; i < 501; i++)
+        {
+            for(int j = 0; j < 501; j++)
             {
-                if(i == 1)
-                {
-                    arr[j][i] = max(arr[j-1][i], nums1[i-1]*nums2[j-1]);
-                    maxi = max(arr[j][i], maxi);
-                }
-                else if(j == 1)
-                {
-                    arr[j][i] = max(arr[j][i-1], nums1[i-1]*nums2[j-1]);
-                    maxi = max(arr[j][i], maxi);
-                }
-                else
-                {
-                    arr[j][i] = max({arr[j-1][i],arr[j][i-1],nums1[i-1]*nums2[j-1], arr[j-1][i-1],nums1[i-1]*nums2[j-1] + arr[j-1][i-1]});
-                    maxi = max(maxi, arr[j][i]);
-                }
+                memo[i][j] = UNVISITED;
             }
         }
-        return maxi;
+        return solve(nums1, nums2, nums1.size(), nums2.size(), 0,0,memo);
     }
 };
