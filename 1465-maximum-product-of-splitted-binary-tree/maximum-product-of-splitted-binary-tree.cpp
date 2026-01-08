@@ -10,53 +10,32 @@
  * };
  */
 class Solution {
-    private:
-    pair<TreeNode*, TreeNode*> splitTree(TreeNode* parent, bool splitLeft)
-    {
-        if(parent == nullptr)
-        {
-            return {nullptr,nullptr};
-        }
-        TreeNode* detached;
-        if(splitLeft)
-        {
-            detached = parent->left;
-            parent->left = nullptr;
-        }
-        else
-        {
-            detached = parent->right;
-            parent->right = nullptr;
-        }
-        return {parent, detached};
-    }
 public:
-    int MOD = 1e9+7;
     using LL = long long;
     LL totalSum = 0;
+    int MOD = 1e9+7;
     LL maxProd = 0;
     LL getTotalSum(TreeNode* root)
-    {
-        if(root == nullptr) return 0;
-        return root->val + getTotalSum(root->left) + getTotalSum(root->right);
-    }
-
-    LL dfs(TreeNode* root)
     {
         if(root == nullptr)
         {
             return 0;
         }
-        LL leftNode = dfs(root->left);
-        LL rightNode = dfs(root->right);
-
-        LL subTreeSum = root->val + leftNode + rightNode;
-        maxProd = max(maxProd, subTreeSum * (totalSum - subTreeSum));
-        return subTreeSum;
+        return root->val + getTotalSum(root->left) + getTotalSum(root->right);
+    }
+    LL solve(TreeNode* root)
+    {
+        if(root == nullptr)
+        {
+            return 0;
+        }
+        LL subTree = root->val + solve(root->left) + solve(root->right);
+        maxProd = max(maxProd, subTree * (totalSum - subTree));
+        return subTree;
     }
     int maxProduct(TreeNode* root) {
         totalSum = getTotalSum(root);
-        dfs(root);
+        solve(root);
         return (maxProd % MOD);
     }
 };
