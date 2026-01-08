@@ -1,36 +1,35 @@
 class Solution {
 public:
-    typedef long long ll;
+    using LL = long long;
     long long maxMatrixSum(vector<vector<int>>& matrix) {
-        int count_negve = 0;
-        int m = matrix.size();
-        int n = matrix[0].size();
-        int get_min = INT_MAX;
-        int* p[m];
-        for (int i = 0; i < m; ++i) {
-        p[i] = matrix[i].data();
-    }
-        ll total_sum = 0;
-        for(int i = 0; i < m; ++i)
+        // first count the number of negative numbers 
+        // if they are even just return the sum of all
+        // if they have odd then get the minimum number multiply by 2 as the change in sum will be always 2 because change is always = finalvalue - initial value 
+        // in this case we are inverting or flipping the numbers so suppose first x = -7 and then x = 7 we get change = 7+7 = 2 * 7
+        LL minNumber = INT_MAX;
+        LL total_sum = 0;
+        LL total_negative_numbers = 0;
+        int n = matrix.size();
+
+        for(int i = 0; i < n; i++)
         {
-            for(int j = 0; j < n; ++j)
+            for(int j = 0; j < n; j++)
             {
-                get_min = min(get_min, abs(*(*(p + i) + j)));
-                total_sum += abs(*(*(p + i) + j));
-                if(*(*(p + i) + j) < 0)
-                {                    
-                    count_negve++;
+                LL current_element = matrix[i][j];
+                if(matrix[i][j] < 0)
+                {
+                    total_negative_numbers++;
+                    current_element = -1 * current_element;
                 }
+                minNumber = min(minNumber, current_element);
+                total_sum = total_sum + current_element;
+
             }
         }
-        if(!(count_negve&1))
+        if(total_negative_numbers % 2 == 0)
         {
             return total_sum;
         }
-        else
-        {
-            return total_sum-(2*get_min);
-        }
-        return 0;
+        return (total_sum - 2 * (minNumber));
     }
 };
