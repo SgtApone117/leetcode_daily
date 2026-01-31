@@ -1,7 +1,7 @@
 class Solution {
 public:
     char nextGreatestLetter(vector<char>& letters, char target) {
-        sort(letters.begin(),letters.end());
+        //sort(letters.begin(),letters.end());
         for(char ch : letters)
         {
             if(ch > target)
