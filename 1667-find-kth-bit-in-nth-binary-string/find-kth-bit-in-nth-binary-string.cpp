@@ -1,21 +1,22 @@
 class Solution {
 public:
     char findKthBit(int n, int k) {
-        if(n == 1)
-            return '0';
-        int length = (1 << n) - 1;
-        if(k < ceil(length/2.0))
-        {
-            return findKthBit(n-1, k);
+        string sequence = "0";
+
+        // Generate sequence until we have enough elements or reach nth
+        // iteration
+        for (int i = 1; i < n && k > sequence.length(); ++i) {
+            sequence += '1';
+
+            // Append the inverted and reversed part of the existing sequence
+            string temp = sequence;
+            for (int j = temp.length() - 2; j >= 0; --j) {
+                char invertedBit = (temp[j] == '1') ? '0' : '1';
+                sequence += invertedBit;
+            }
         }
-        else if(k == ceil(length/2.0))
-        {
-            return '1';
-        }
-        else
-        {
-            char ch = findKthBit(n-1, length-(k-1));
-            return ch == '0' ? '1' : '0';
-        }
+
+        // Return the kth bit
+        return sequence[k - 1];
     }
 };
