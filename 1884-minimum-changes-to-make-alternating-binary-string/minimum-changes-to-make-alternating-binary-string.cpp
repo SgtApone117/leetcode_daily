@@ -1,27 +1,32 @@
 class Solution {
 public:
     int minOperations(string s) {
-        int n = s.size();
-
-        int start_with_0 = 0;
-
-        for(int i = 0; i < n; i++)
+        int start_with_one = 0, start_with_zero = 0;
+        for(int i = 0; i < s.size(); i++)
         {
             if(0 == i % 2)
             {
-                if('1' == s[i])
+                if('0' == s[i])
                 {
-                    start_with_0++;
+                    start_with_one++;
+                }
+                else
+                {
+                    start_with_zero++;
                 }
             }
             else
             {
-                if('0' == s[i])
+                if('1' == s[i])
                 {
-                    start_with_0++;
+                    start_with_one++;
+                }
+                else
+                {
+                    start_with_zero++;
                 }
             }
         }
-        return min(n - start_with_0, start_with_0);
+        return min(start_with_one, start_with_zero);
     }
 };
