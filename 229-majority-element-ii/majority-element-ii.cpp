@@ -1,52 +1,61 @@
 class Solution {
 public:
-    vector<int> majorityElement(vector<int>& nums) 
-    {
-        vector<int> result;
-        int candidate1 = INT_MIN, candidate2 = INT_MIN, vote1 = 0, vote2 = 0;
-        for(int &num : nums)
+    vector<int> majorityElement(vector<int>& nums) {
+        int ele1 = INT_MIN, ele2 = INT_MIN;
+        int cnt1 = 0, cnt2 = 0;
+        int n = nums.size();
+        for(auto num : nums)
         {
-            if(0 == vote1 && num != candidate2)
+            if(num == ele1)
             {
-                vote1++;
-                candidate1 = num;
+                cnt1++;
             }
-            else if(0 == vote2 && num != candidate1)
+            else if(num == ele2)
             {
-                vote2++;
-                candidate2 = num;
+                cnt2++;
             }
-            else if(num == candidate1)
+            else if(cnt1 == 0)
             {
-                vote1++;
+                ele1 = num;
+                cnt1 = 1;
             }
-            else if(num == candidate2)
+            else if(cnt2 == 0)
             {
-                vote2++;
+                ele2 = num;
+                cnt2 = 1;
             }
             else
             {
-                vote1--;
-                vote2--;
+                cnt1--;
+                cnt2--;
             }
         }
-        int mini = int(nums.size() / 3) + 1;
-        vote1 = 0, vote2 = 0;
-        for(int &x : nums)
+
+        cnt1 = 0, cnt2 = 0;
+        int majEle = (n/3) + 1;
+        for(auto num : nums)
         {
-            if(x == candidate1)
-                vote1++;
-            else if(x == candidate2)
-                vote2++;
+            if(num == ele1)
+            {
+                cnt1++;
+            }
+            else if(num == ele2)
+            {
+                cnt2++;
+            }
         }
-        if(vote1 >= mini)
+
+        vector<int> result;
+        if(cnt1 >= majEle)
         {
-            result.push_back(candidate1);
+            result.emplace_back(ele1);
         }
-        if(vote2 >= mini)
+
+        if(cnt2 >= majEle && ele1 != ele2)
         {
-            result.push_back(candidate2);
+            result.emplace_back(ele2);
         }
+
         return result;
     }
 };
